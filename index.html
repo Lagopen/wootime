@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上傳您的評語</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input,
+        textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>給我們的評語</h2>
+
+    <input
+        type="text"
+        id="name"
+        placeholder="您的姓名"
+    >
+
+    <textarea
+        id="comment"
+        placeholder="您的評語"
+        rows="4"
+    ></textarea>
+
+    <br>
+
+    <button id="submitBtn" onclick="submitComment()">
+        上傳
+    </button>
+
+    <p id="status"></p>
+
+    <script>
+
+        const API_URL =
+        "https://script.google.com/macros/s/AKfycbxj1wvRDsOrTsI8EPTBSAELQb_0IBcjATQKFuObo6o1aOYnOq7RrwcibczAddEq7Y_Z/exec";
+
+        async function submitComment() {
+
+            const nameValue =
+                document.getElementById("name").value.trim();
+
+            const commentValue =
+                document.getElementById("comment").value.trim();
+
+            const status =
+                document.getElementById("status");
+
+            if (!nameValue || !commentValue) {
+
+                alert("請填寫姓名與評語");
+                return;
+            }
+
+            status.innerHTML = "上傳中...";
+
+            try {
+
+                // 改成 FormData
+                const formData = new FormData();
+
+                formData.append("name", nameValue);
+                formData.append("comment", commentValue);
+
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                console.log(result);
+
+                if (result.result === "success") {
+
+                    status.innerHTML =
+                        "<font color='green'>上傳成功！</font>";
+
+                    document.getElementById("name").value = "";
+                    document.getElementById("comment").value = "";
+
+                } else {
+
+                    status.innerHTML =
+                        "<font color='red'>" +
+                        result.message +
+                        "</font>";
+                }
+
+            } catch(error) {
+
+                console.error(error);
+
+                status.innerHTML =
+                    "<font color='red'>"
+                    + error.message +
+                    "</font>";
+            }
+        }
+
+        </script>
+
+</body>
+
+</html>
