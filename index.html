@@ -7,10 +7,9 @@
     <title>WooTime | 評語上傳區</title>
 
     <style>
-        /* 整體視覺重塑：深沉溫暖的大地色系 */
         body {
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background-color: #d6c0a0; /* 指定的底色 */
+            background-color: #d6c0a0;
             color: #4a3e3d;
             margin: 0;
             padding: 20px;
@@ -20,12 +19,11 @@
             min-height: 90vh;
         }
 
-        /* 撐起輸入區的霧面白色卡片 */
         .container {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255,255,255,0.85);
             padding: 30px 25px;
             border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
             width: 100%;
             max-width: 400px;
             box-sizing: border-box;
@@ -39,7 +37,6 @@
             letter-spacing: 1px;
         }
 
-        /* 欄位群組，用來相對定位字數顯示器 */
         .input-group {
             position: relative;
             margin-bottom: 20px;
@@ -68,10 +65,12 @@
             outline: none;
         }
 
+        /* 修正這裡 textarea :focus -> textarea:focus */
+
         input[type="text"]:focus,
-        textarea :focus {
+        textarea:focus {
             border-color: #8c765c;
-            box-shadow: 0 0 0 3px rgba(140, 118, 92, 0.2);
+            box-shadow: 0 0 0 3px rgba(140,118,92,0.2);
             background-color: #ffffff;
         }
 
@@ -79,7 +78,6 @@
             resize: none;
         }
 
-        /* 內嵌於輸入框右下角的字數監聽提示 */
         .counter-hint {
             position: absolute;
             right: 12px;
@@ -89,7 +87,6 @@
             pointer-events: none;
         }
 
-        /* 現代質感按鈕 */
         button {
             width: 100%;
             padding: 14px;
@@ -100,7 +97,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(140, 118, 92, 0.3);
+            box-shadow: 0 4px 12px rgba(140,118,92,0.3);
             transition: all 0.2s ease;
             letter-spacing: 2px;
         }
@@ -108,10 +105,6 @@
         button:hover {
             background-color: #736049;
             transform: translateY(-1px);
-        }
-
-        button:active {
-            transform: translateY(1px);
         }
 
         button:disabled {
@@ -122,145 +115,243 @@
             transform: none;
         }
 
-        /* 狀態提示字 */
         #status {
             margin-top: 15px;
             font-size: 0.95rem;
             font-weight: 500;
             min-height: 22px;
         }
-        
-        .success-text { color: #2e6930; font-weight: bold; }
-        .error-text { color: #b33939; }
-        .loading-text { color: #8c765c; }
+
+        .success-text {
+            color: #2e6930;
+            font-weight: bold;
+        }
+
+        .error-text {
+            color: #b33939;
+        }
+
+        .loading-text {
+            color: #8c765c;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h2>給我們的評語</h2>
+<div class="container">
 
-        <div class="input-group">
-            <label for="name">您的姓名</label>
-            <input
-                type="text"
-                id="name"
-                placeholder="請輸入名字或暱稱"
-                oninput="validateForm()"
-            >
-        </div>
+    <h2>給我們的評語</h2>
 
-        <div class="input-group">
-            <label for="comment">您的評語</label>
-            <textarea
-                id="comment"
-                placeholder="說點什麼吧..."
-                rows="4"
-                maxlength="50"
-                oninput="updateCounter()"
-            ></textarea>
-            <div class="counter-hint" id="charCounter">0 / 50</div>
-        </div>
+    <div class="input-group">
+        <label for="name">您的姓名</label>
 
-        <button id="submitBtn" onclick="submitComment()" disabled>
-            傳送評語
-        </button>
-
-        <p id="status"></p>
+        <input
+            type="text"
+            id="name"
+            placeholder="請輸入名字或暱稱"
+            oninput="validateForm()"
+        >
     </div>
 
-    <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxj1wvRDsOrTsI8EPTBSAELQb_0IBcjATQKFuObo6o1aOYnOq7RrwcibczAddEq7Y_Z/exec";
+    <div class="input-group">
 
-        // 更新字數與檢查按鈕
-        function updateCounter() {
-            const commentInput = document.getElementById("comment");
-            const counter = document.getElementById("charCounter");
-            const currentLength = commentInput.value.length;
-            
-            counter.innerText = `${currentLength} / 50`;
-            
-            // 如果超過 50 字（防呆），字體變紅
-            if (currentLength >= 50) {
-                counter.style.color = "#b33939";
-            } else {
-                counter.style.color = "#a39281";
-            }
-            
-            validateForm();
+        <label for="comment">您的評語</label>
+
+        <textarea
+            id="comment"
+            placeholder="說點什麼吧..."
+            rows="4"
+            maxlength="50"
+            oninput="updateCounter()"
+        ></textarea>
+
+        <div class="counter-hint" id="charCounter">
+            0 / 50
+        </div>
+
+    </div>
+
+    <button
+        id="submitBtn"
+        onclick="submitComment()"
+        disabled
+    >
+        傳送評語
+    </button>
+
+    <p id="status"></p>
+
+</div>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxj1wvRDsOrTsI8EPTBSAELQb_0IBcjATQKFuObo6o1aOYnOq7RrwcibczAddEq7Y_Z/exec";
+
+function updateCounter()
+{
+    const commentInput =
+        document.getElementById("comment");
+
+    const counter =
+        document.getElementById("charCounter");
+
+    const currentLength =
+        commentInput.value.length;
+
+    counter.innerText =
+        `${currentLength} / 50`;
+
+    if (currentLength >= 50)
+    {
+        counter.style.color = "#b33939";
+    }
+    else
+    {
+        counter.style.color = "#a39281";
+    }
+
+    validateForm();
+}
+
+function validateForm()
+{
+    const nameValue =
+        document.getElementById("name")
+        .value
+        .trim();
+
+    const commentValue =
+        document.getElementById("comment")
+        .value
+        .trim();
+
+    const submitBtn =
+        document.getElementById("submitBtn");
+
+    submitBtn.disabled =
+        !(nameValue && commentValue);
+}
+
+async function submitComment()
+{
+    const nameInput =
+        document.getElementById("name");
+
+    const commentInput =
+        document.getElementById("comment");
+
+    const submitBtn =
+        document.getElementById("submitBtn");
+
+    const status =
+        document.getElementById("status");
+
+    const nameValue =
+        nameInput.value.trim();
+
+    const commentValue =
+        commentInput.value.trim();
+
+    if (!nameValue || !commentValue)
+    {
+        alert("請完整填寫姓名與評語");
+        return;
+    }
+
+    if (commentValue.length > 50)
+    {
+        alert("評語內容請在 50 字以內");
+        return;
+    }
+
+    status.className = "loading-text";
+
+    status.innerHTML =
+        "正在傳送至現場大螢幕...";
+
+    submitBtn.disabled = true;
+
+    try
+    {
+        const formData = new FormData();
+
+        formData.append("action", "upload");
+
+        formData.append("name", nameValue);
+
+        formData.append("comment", commentValue);
+
+        const response =
+            await fetch(API_URL, {
+                method: "POST",
+                body: formData,
+                redirect: "follow"
+            });
+
+        // GAS 不保證 JSON Header 正確
+        const text =
+            await response.text();
+
+        console.log(text);
+
+        let result;
+
+        try
+        {
+            result = JSON.parse(text);
+        }
+        catch
+        {
+            throw new Error(
+                "GAS 回傳格式錯誤"
+            );
         }
 
-        // 驗證欄位是否都有填寫，沒填寫就鎖定按鈕
-        void function validateForm() {
-            const nameValue = document.getElementById("name").value.trim();
-            const commentValue = document.getElementById("comment").value.trim();
-            const submitBtn = document.getElementById("submitBtn");
-            
-            if (nameValue && commentValue) {
-                submitBtn.disabled = false;
-            } else {
-                submitBtn.disabled = true;
-            }
+        if (result.result === "success")
+        {
+            status.className =
+                "success-text";
+
+            status.innerHTML =
+                "✨ 上傳成功！感謝您的珍貴意見 ✨";
+
+            nameInput.value = "";
+
+            commentInput.value = "";
+
+            document.getElementById(
+                "charCounter"
+            ).innerText = "0 / 50";
         }
-        window.validateForm = validateForm;
+        else
+        {
+            status.className =
+                "error-text";
 
-        async function submitComment() {
-            const nameInput = document.getElementById("name");
-            const commentInput = document.getElementById("comment");
-            const submitBtn = document.getElementById("submitBtn");
-            const status = document.getElementById("status");
-
-            const nameValue = nameInput.value.trim();
-            const commentValue = commentInput.value.trim();
-
-            if (!nameValue || !commentValue) {
-                alert("請完整填寫姓名與評語");
-                return;
-            }
-
-            // 二次檢查字數上限
-            if (commentValue.length > 50) {
-                alert("評語內容請在 50 字以內喔！");
-                return;
-            }
-
-            status.className = "loading-text";
-            status.innerHTML = "正在傳送至現場大螢幕...";
-            submitBtn.disabled = true;
-
-            try {
-                const formData = new FormData();
-                formData.append("name", nameValue);
-                formData.append("comment", commentValue);
-
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.result === "success") {
-                    status.className = "success-text";
-                    status.innerHTML = "✨ 上傳成功！感謝您的珍貴意見 ✨";
-
-                    // 清空欄位與重置字數
-                    nameInput.value = "";
-                    commentInput.value = "";
-                    document.getElementById("charCounter").innerText = "0 / 50";
-                } else {
-                    status.className = "error-text";
-                    status.innerHTML = "傳送失敗：" + result.message;
-                }
-
-            } catch (error) {
-                console.error(error);
-                status.className = "error-text";
-                status.innerHTML = "連線發生錯誤，請稍後再試。";
-            } finally {
-                // 重新評估按鈕狀態
-                validateForm();
-            }
+            status.innerHTML =
+                "傳送失敗：" +
+                result.message;
         }
-    </script>
+    }
+    catch(error)
+    {
+        console.error(error);
+
+        status.className =
+            "error-text";
+
+        status.innerHTML =
+            "連線失敗：" + error.message;
+    }
+    finally
+    {
+        validateForm();
+    }
+}
+
+</script>
+
+</body>
+</html>
