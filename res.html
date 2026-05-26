@@ -1,36 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WooTime | 評語上傳區</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WooTime 排隊系統</title>
 
-    <style>
-        body {
-            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background-color: #d6c0a0;
-            color: #4a3e3d;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 90vh;
-        }
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#d6c0a0;
+    color:#3d3130;
+}
 
-        .container {
-            background-color: rgba(255,255,255,0.85);
-            padding: 30px 25px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
-        }
+.container{
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
 
-        h2 {
-            margin-top: 0;
-            margin-bottom: 25px;
-            color: #3d3130;
-            font-size: 1.6rem;
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+}
+
+.current-number{
+    font-size:72px;
+    font-weight:bold;
+    text-align:center;
+    color:#8c765c;
+}
+
+.waiting-count{
+    text-align:center;
+    font-size:20px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+    margin-top:10px;
+}
+
